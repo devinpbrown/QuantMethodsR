@@ -126,11 +126,13 @@ rho_sequence = seq(0, 0.9, 0.05)
 rho_plot = varying_rho(rho_sequence, 1000, 2000)
 plot(rho_sequence, rho_plot$CI[,1], type = 'l', xlab = 'Rho Values', ylab = 'X1 Confidence Estimates')
 abline(h = 0.95, lty = 2)
+pdf('varying_rhos_plot1.pdf')
+dev.off()
 
 par(mfrow=c(1,1), mgp=c(1.5,0,0), tcl=1, mar=c(3,3,1,1), cex.lab=1, cex.axis=1)
 plot(rho_sequence, rho_plot$FP[,1], type = 'l', xlab = 'Rho Values', ylab = 'X4 False Positive Rate')
 abline(h = 0.95, lty = 2)
-
-rho_plot
+pdf('varying_rhos_plot2.pdf')
+dev.off()
 
 
