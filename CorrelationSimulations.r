@@ -1,4 +1,4 @@
-set.seed(1453)
+
 #simulating a nx10 matrix using different PDFs
 matrixcreator <- function(n = 500){
   x1 = rnorm(n, mean= 4, sd = 4)
@@ -15,12 +15,16 @@ matrixcreator <- function(n = 500){
   return(X)
 }
 
+matrixcreator(1000)
+
+#now creating a y column that is linearly correlated to the matrix
 ycreator = function(X){
   y = 0.8*X[,1] + 0.2*X[,2] - 0.5*X[,3] + rnorm(nrow(X))
   return(y)
 }
 
-sampler = function(n.samps, n = 500, seed = 666){
+#creating n.samps matrices and y values, then checking coverage probabilities as well as false positives and false negatives
+sampler = function(n.samps, n = 1000, seed = 1453){
   set.seed(seed)
   ints = matrix(ncol = 10, nrow = n.samps)
   falneg = matrix(ncol=3, nrow = n.samps)
@@ -40,6 +44,9 @@ sampler = function(n.samps, n = 500, seed = 666){
   return(list('confint_perc' = confint_perc, 'false_positives' = false_positives, 'false_negatives' = false_negatives))
 }
 
+sampler(500, 10000, 400)
+
+#changing the number of samples and considering how coverage percentage, false negatives, and false positives change as we increase the number of samples
 varying_samps <- function(runs, n=500, seed = 500){
   set.seed(seed)
   CI = matrix(nrow= length(runs), ncol = 10)
@@ -54,8 +61,10 @@ varying_samps <- function(runs, n=500, seed = 500){
   return(list(CI, FP, FN))
 }
 
+runs = seq(300, 2000, 200)
 varying_samps(runs)
 
+#creating a correlation between x1 and x4 then checking how coverage changes
 correlationcreator <- function(rho, n.samps=500, n= 2000, seed=600){
   set.seed(seed)
   ints = matrix(ncol = 10, nrow = n.samps)
@@ -79,6 +88,7 @@ correlationcreator <- function(rho, n.samps=500, n= 2000, seed=600){
 
 correlationcreator(0.3)
 
+#seeing how coverage changes at different levels of correlation
 varying_rho <- function(rho_sequence, n.samps=500, n =1000, seed = 100){
   set.seed(seed)
   CI = matrix(nrow= length(rho_sequence), ncol = 10)
