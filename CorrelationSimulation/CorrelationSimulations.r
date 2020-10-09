@@ -119,7 +119,7 @@ rho_sequence
 varying_rho(rho_sequence)
 
 #plotting both coverage over changing samps and rho
-runs = seq(50, 4050, 200)
+runs = seq(50, 7050, 200)
 CI_plot = varying_samps(runs)
 library(viridis)
 col = viridis(4)
